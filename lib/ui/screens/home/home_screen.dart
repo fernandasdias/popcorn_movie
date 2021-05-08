@@ -1,4 +1,5 @@
 import 'package:PopcornMovie/domain/entities/show.dart';
+import 'package:PopcornMovie/ui/screens/movie_detail/movie_detail_screen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -145,72 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: CircularProgressIndicator(),
             );
           }),
-        )
-        /*Container(
-        color: kPrimaryColorLightest,
-        child: SafeArea(
-          minimum: EdgeInsets.all(16),
-          child: Container(
-            child: Column(
-              children: [
-                Container(
-                  // color: Colors.red,
-                  child: TextField(
-                    readOnly: false,
-                    showCursor: true,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.black,
-                            style: BorderStyle.solid,
-                          ),
-                          borderRadius: BorderRadius.circular(24),
-                        ),
-                        filled: true,
-                        fillColor: kPrimaryColorLightest,
-                        prefixIcon: Icon(
-                          Icons.search_outlined,
-                          color: kPrimaryColorDark,
-                          size: 24,
-                        )),
-                    keyboardType: TextInputType.text,
-                  ),
-                ),
-                SizedBox(
-                  height: 24,
-                ),
-                BlocBuilder<ShowBloc, ShowState>(builder: (context, state) {
-                  if (state is IndexLoadedState) {
-                    print('index loaded with sucess');
-                    List<ShowModel> shows = state.show.showList;
-                    // int lenght = shows.length;
-                    // ShowModel showModel = state.show.showList[0];
-                    // ShowModel showModel2 = state.show.showList[1];
-
-                    return GridView.builder(
-              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 200,
-                childAspectRatio: 0.55,
-                crossAxisSpacing: 20,
-                mainAxisSpacing: 20,
-              ),
-              itemCount: shows.length,
-              itemBuilder: (BuildContext ctx, index) {
-                return MovieCard(showModel: shows[index]);
-              },
-            );
-                  }
-
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                })
-              ],
-            ),
-          ),
-        ),
-      ),*/
-        );
+        ));
   }
 }
 
@@ -225,6 +161,11 @@ class CarouselItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => MovieDetailScreen(showModel: shows),
+          )),
       child: Container(
         decoration: BoxDecoration(
           boxShadow: [

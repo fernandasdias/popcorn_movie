@@ -1,19 +1,33 @@
+import 'package:PopcornMovie/domain/entities/show.dart';
 import 'package:flutter/material.dart';
 
 import 'package:PopcornMovie/data/models/show.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class MovieDetailScreen extends StatelessWidget {
+class MovieDetailScreen extends StatefulWidget {
   const MovieDetailScreen({
     Key? key,
     required this.showModel,
   }) : super(key: key);
 
-  final ShowModel showModel;
+  final Show showModel;
+
+  @override
+  _MovieDetailScreenState createState() => _MovieDetailScreenState();
+}
+
+class _MovieDetailScreenState extends State<MovieDetailScreen> {
+  @override
+  void initState() {
+    // BlocProvider.of(context).add(ShowMainInformation(widget.showModel.id));
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(showModel.name!),
+        title: Text(widget.showModel.name!),
       ),
       body: Container(
         child: Column(
@@ -21,12 +35,12 @@ class MovieDetailScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Image.network(showModel.image),
+                Image.network(widget.showModel.image),
                 Column(
                   children: [
-                    Text(showModel.name!),
-                    Text(showModel.type!),
-                    Text(showModel.genres.toString()),
+                    Text(widget.showModel.name!),
+                    Text(widget.showModel.type!),
+                    Text(widget.showModel.genres.toString()),
                     // Text('${showModel.average}'),
                     // Text(
                     //   showModel.network.toString(),

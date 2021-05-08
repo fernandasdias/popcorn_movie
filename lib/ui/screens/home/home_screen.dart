@@ -1,3 +1,4 @@
+import 'package:PopcornMovie/domain/entities/show.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -50,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: BlocBuilder<ShowBloc, ShowState>(builder: (context, state) {
             if (state is IndexLoadedState) {
               print('index loaded with sucess');
-              List<ShowModel> shows = state.show.showList;
+              List<Show> shows = state.show.showList;
               // int lenght = shows.length;
               // ShowModel showModel = state.show.showList[0];
               // ShowModel showModel2 = state.show.showList[1];

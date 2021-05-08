@@ -1,6 +1,7 @@
 import 'package:PopcornMovie/data/models/show.dart';
 import 'package:PopcornMovie/data/repositories/tvmaze_repository.dart';
 import 'package:PopcornMovie/domain/entities/show.dart';
+import 'package:PopcornMovie/domain/entities/showList.dart';
 
 class ShowUseCase {
   static Future<ShowList> showIndex() async {

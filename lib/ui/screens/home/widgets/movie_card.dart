@@ -1,3 +1,4 @@
+import 'package:PopcornMovie/domain/entities/show.dart';
 import 'package:PopcornMovie/ui/screens/movie_detail/movie_detail_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +10,7 @@ class MovieCard extends StatelessWidget {
     required this.showModel,
   }) : super(key: key);
 
-  final ShowModel showModel;
+  final Show showModel;
 
   @override
   Widget build(BuildContext context) {

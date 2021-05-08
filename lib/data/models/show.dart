@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 
 class ShowList {
   List<ShowModel> showList = [];
-  ShowList.fromJson(List<dynamic> json) {
+  ShowList.fromJson(List<dynamic>? json) {
     if (json != null) {
       json.forEach((element) {
         showList.add(ShowModel.fromJson(element));
@@ -15,18 +15,18 @@ class ShowList {
 
 class ShowModel extends Show {
   ShowModel({
-    @required int id,
-    @required String name,
-    @required dynamic image,
-    @required dynamic imageOriginal,
-    @required String status,
-    @required dynamic summary,
-    @required String type,
-    @required dynamic genres,
-    @required int runtime,
-    @required dynamic average,
-    @required dynamic schedule,
-    @required dynamic network,
+    required int id,
+    required String? name,
+    required dynamic image,
+    required dynamic imageOriginal,
+    required String? status,
+    required dynamic summary,
+    required String? type,
+    required dynamic genres,
+    required int runtime,
+    required dynamic average,
+    required dynamic schedule,
+    required dynamic network,
   }) : super(
           id: id,
           name: name,
@@ -54,7 +54,7 @@ class ShowModel extends Show {
       summary: json['summary'],
       type: json['type'],
       genres: json['genres'],
-      runtime: (json['runtime'] as num).toInt(),
+      runtime: json['runtime'] ?? -1,
       average: json['rating'],
       schedule: json['schedule'],
       network: json['network'],

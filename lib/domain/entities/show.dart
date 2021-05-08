@@ -1,15 +1,15 @@
 import 'package:equatable/equatable.dart';
 
 class Show extends Equatable {
-  final int id;
-  final String name;
-  final String status;
+  final int? id;
+  final String? name;
+  final String? status;
   final dynamic image;
   final dynamic imageOriginal;
   final dynamic summary;
-  final String type;
+  final String? type;
   final dynamic genres;
-  final int runtime;
+  final int? runtime;
   final dynamic average;
   final dynamic schedule;
   final dynamic network;
@@ -30,7 +30,7 @@ class Show extends Equatable {
   });
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         id,
         status,
         image,

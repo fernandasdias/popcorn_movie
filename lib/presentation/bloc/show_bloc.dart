@@ -21,7 +21,7 @@ class ShowBloc extends Bloc<ShowEvent, ShowState> {
 
       yield* mapShowIndexEvent();
     }
-    if (state is SearchShowEvent) yield* mapSearchShowEvent(event);
+    if (state is SearchShowEvent) yield* mapSearchShowEvent(event as SearchShowEvent);
   }
 
   Stream<ShowState> mapShowIndexEvent() async* {

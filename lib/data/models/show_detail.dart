@@ -2,26 +2,26 @@ import 'package:PopcornMovie/domain/entities/show.dart';
 import 'package:flutter/material.dart';
 
 class ShowDetailList {
-  ShowDetail showDetail;
-  ShowDetailList.fromJson(dynamic json) {
+  late ShowDetail showDetail;
+  ShowDetailList.fromJson(dynamic? json) {
     showDetail = ShowDetail.fromJson(json);
   }
 }
 
 class ShowDetail extends Show {
   ShowDetail({
-    @required int id,
-    @required String name,
-    @required dynamic image,
-    @required dynamic imageOriginal,
-    @required String status,
-    @required dynamic summary,
-    @required String type,
-    @required dynamic genres,
-    @required int runtime,
-    @required dynamic average,
-    @required dynamic schedule,
-    @required dynamic network,
+    required int id,
+    required String? name,
+    required dynamic image,
+    required dynamic imageOriginal,
+    required String? status,
+    required dynamic summary,
+    required String? type,
+    required dynamic genres,
+    required int runtime,
+    required dynamic average,
+    required dynamic schedule,
+    required dynamic network,
   }) : super(
           id: id,
           name: name,

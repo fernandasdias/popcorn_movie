@@ -4,8 +4,8 @@ import 'package:PopcornMovie/data/models/show.dart';
 
 class MovieDetailScreen extends StatelessWidget {
   const MovieDetailScreen({
-    Key key,
-    @required this.showModel,
+    Key? key,
+    required this.showModel,
   }) : super(key: key);
 
   final ShowModel showModel;
@@ -13,7 +13,7 @@ class MovieDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(showModel.name),
+        title: Text(showModel.name!),
       ),
       body: Container(
         child: Column(
@@ -24,8 +24,8 @@ class MovieDetailScreen extends StatelessWidget {
                 Image.network(showModel.image),
                 Column(
                   children: [
-                    Text(showModel.name),
-                    Text(showModel.type),
+                    Text(showModel.name!),
+                    Text(showModel.type!),
                     Text(showModel.genres.toString()),
                     // Text('${showModel.average}'),
                     // Text(

@@ -22,4 +22,22 @@ class TvMazeDatasource {
       rethrow;
     }
   }
+
+  static Future<ShowList> searchShow(String searchTerm) async {
+    Client client = Client();
+    String url = 'http://api.tvmaze.com/search/shows?q=$searchTerm';
+
+    try {
+      final response = await client.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        // print(response.toString());
+        return ShowList.fromJson(json.decode(response.body));
+      } else {
+        throw Exception('Failed to get API content');
+      }
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
+  }
 }

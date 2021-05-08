@@ -16,7 +16,8 @@ class _HomeScreenProviderState extends State<HomeScreenProvider> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ShowBloc()..add(ShowIndexEvent()),
+      create: (context) =>
+          ShowBloc()..add(ShowIndexEvent()), //add(SearchShowEvent('girls')),
       child: HomeScreen(),
     );
   }

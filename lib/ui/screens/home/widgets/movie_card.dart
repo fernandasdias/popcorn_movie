@@ -5,8 +5,8 @@ import 'package:PopcornMovie/data/models/show.dart';
 
 class MovieCard extends StatelessWidget {
   const MovieCard({
-    Key key,
-    @required this.showModel,
+    Key? key,
+    required this.showModel,
   }) : super(key: key);
 
   final ShowModel showModel;
@@ -22,7 +22,7 @@ class MovieCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Text(
-            showModel.name,
+            showModel.name!,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
           Padding(
@@ -36,7 +36,7 @@ class MovieCard extends StatelessWidget {
             ),
           ),
           Text(
-            showModel.status,
+            showModel.status!,
             style: TextStyle(fontSize: 12),
           )
         ],

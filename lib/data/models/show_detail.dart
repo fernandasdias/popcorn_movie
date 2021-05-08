@@ -37,6 +37,7 @@ class ShowDetail extends Show {
         );
 
   factory ShowDetail.fromJson(Map<String, dynamic> json) {
+    print(json['rating']);
     return ShowDetail(
       id: (json['id'] as num).toInt(),
       name: json['name'],

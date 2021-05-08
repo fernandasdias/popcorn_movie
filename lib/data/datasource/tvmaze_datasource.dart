@@ -28,7 +28,7 @@ class TvMazeDatasource {
 
   static Future<ShowDetailList> showDetail(int id) async {
     Client client = Client();
-    String url = 'http://api.tvmaze.com/shows/$id?embed=cast';
+    String url = 'https://api.tvmaze.com/shows/$id?embed=cast';
 
     try {
       final response = await client.get(Uri.parse(url));

@@ -22,9 +22,9 @@ class ShowBloc extends Bloc<ShowEvent, ShowState> {
       print('calling show index event');
 
       yield* mapShowIndexEvent();
-    } else if (state is ShowDetailEvent) {
+    } else if (event is ShowDetailEvent) {
       print('calling show detail event');
-      yield* mapShowDetailEvent(event as ShowDetailEvent);
+      yield* mapShowDetailEvent(event);
     }
     if (state is SearchShowEvent)
       yield* mapSearchShowEvent(event as SearchShowEvent);

@@ -1,3 +1,4 @@
+import 'package:PopcornMovie/domain/entities/show.dart';
 import 'package:PopcornMovie/presentation/bloc/show_bloc.dart';
 import 'package:PopcornMovie/ui/screens/movie_detail/movie_detail_screen.dart';
 import 'package:flutter/material.dart';
@@ -8,11 +9,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class MovieCard extends StatelessWidget {
   const MovieCard({
     Key? key,
-    required this.showModel,
+    required this.show,
     required this.context,
   }) : super(key: key);
 
-  final ShowModel showModel;
+  final Show show;
   final BuildContext context;
 
   @override
@@ -23,7 +24,7 @@ class MovieCard extends StatelessWidget {
             context,
             MaterialPageRoute(
                 builder: (_) => MovieDetailScreen(
-                      showModel: showModel,
+                      show: show,
                       context: context,
                       // bloc: BlocProvider.of<ShowBloc>(context),
                     )));
@@ -32,7 +33,7 @@ class MovieCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Text(
-            showModel.name!,
+            show.name!,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
           Padding(
@@ -40,13 +41,13 @@ class MovieCard extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: Image.network(
-                showModel.image,
+                show.image,
                 fit: BoxFit.cover,
               ),
             ),
           ),
           Text(
-            showModel.status!,
+            show.status!,
             style: TextStyle(fontSize: 12),
           )
         ],

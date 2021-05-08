@@ -1,8 +1,9 @@
+import 'package:PopcornMovie/domain/entities/show.dart';
+import 'package:PopcornMovie/ui/screens/home/widgets/CarouselItem.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import 'package:PopcornMovie/data/models/show.dart';
 import 'package:PopcornMovie/presentation/bloc/show_bloc.dart';
 import 'package:PopcornMovie/ui/theme/colors.dart';
 import 'widgets/movie_card.dart';
@@ -29,6 +30,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final CarouselController _controller = CarouselController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,36 +52,26 @@ class _HomeScreenState extends State<HomeScreen> {
           child: BlocBuilder<ShowBloc, ShowState>(builder: (context, state) {
             if (state is IndexLoadedState) {
               print('index loaded with sucess');
-              List<ShowModel> shows = state.show.showList;
-              // int lenght = shows.length;
-              // ShowModel showModel = state.show.showList[0];
-              // ShowModel showModel2 = state.show.showList[1];
+              List<Show> shows = state.show.showList;
 
               return Column(
                 children: [
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      // color: Colors.blueGrey,
-                      child: ListView.builder(
-                          // padding: EdgeInsets.symmetric(horizontal: 30),
-                          itemCount: 6,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (BuildContext ctx, index) {
-                            return Container(
-                              padding: EdgeInsets.symmetric(horizontal: 10),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(30),
-                                child: Image.network(
-                                  shows[index].imageOriginal,
-                                  width: MediaQuery.of(context).size.width - 30,
-                                  fit: BoxFit.fitWidth,
-                                ),
-                              ),
-                            );
-                          }),
+                  CarouselSlider(
+                    items: [
+                      CarouselItem(shows: shows[70]),
+                      CarouselItem(shows: shows[80]),
+                      CarouselItem(shows: shows[90]),
+                    ],
+                    options: CarouselOptions(
+                      enlargeCenterPage: true,
+                      aspectRatio: 1.4,
+                      autoPlay: false,
                     ),
+                    carouselController: _controller,
                   ),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[]),
                   SizedBox(
                     height: 16,
                   ),
@@ -95,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       itemCount: shows.length,
                       itemBuilder: (BuildContext ctx, index) {
                         return MovieCard(
-                          showModel: shows[index],
+                          show: shows[index],
                           context: context,
                         );
                       },
@@ -109,71 +101,6 @@ class _HomeScreenState extends State<HomeScreen> {
               child: CircularProgressIndicator(),
             );
           }),
-        )
-        /*Container(
-        color: kPrimaryColorLightest,
-        child: SafeArea(
-          minimum: EdgeInsets.all(16),
-          child: Container(
-            child: Column(
-              children: [
-                Container(
-                  // color: Colors.red,
-                  child: TextField(
-                    readOnly: false,
-                    showCursor: true,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.black,
-                            style: BorderStyle.solid,
-                          ),
-                          borderRadius: BorderRadius.circular(24),
-                        ),
-                        filled: true,
-                        fillColor: kPrimaryColorLightest,
-                        prefixIcon: Icon(
-                          Icons.search_outlined,
-                          color: kPrimaryColorDark,
-                          size: 24,
-                        )),
-                    keyboardType: TextInputType.text,
-                  ),
-                ),
-                SizedBox(
-                  height: 24,
-                ),
-                BlocBuilder<ShowBloc, ShowState>(builder: (context, state) {
-                  if (state is IndexLoadedState) {
-                    print('index loaded with sucess');
-                    List<ShowModel> shows = state.show.showList;
-                    // int lenght = shows.length;
-                    // ShowModel showModel = state.show.showList[0];
-                    // ShowModel showModel2 = state.show.showList[1];
-
-                    return GridView.builder(
-              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 200,
-                childAspectRatio: 0.55,
-                crossAxisSpacing: 20,
-                mainAxisSpacing: 20,
-              ),
-              itemCount: shows.length,
-              itemBuilder: (BuildContext ctx, index) {
-                return MovieCard(showModel: shows[index]);
-              },
-            );
-                  }
-
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                })
-              ],
-            ),
-          ),
-        ),
-      ),*/
-        );
+        ));
   }
 }

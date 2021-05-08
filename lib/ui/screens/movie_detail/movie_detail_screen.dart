@@ -1,4 +1,5 @@
 import 'package:PopcornMovie/data/models/show_detail.dart';
+import 'package:PopcornMovie/domain/entities/show.dart';
 import 'package:PopcornMovie/presentation/bloc/show_bloc.dart';
 import 'package:flutter/material.dart';
 
@@ -8,12 +9,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class MovieDetailScreen extends StatefulWidget {
   const MovieDetailScreen({
     Key? key,
-    required this.showModel,
+    required this.show,
     required this.context,
     // required this.bloc,
   }) : super(key: key);
 
-  final ShowModel showModel;
+  final Show show;
   final BuildContext context;
   // final ShowBloc bloc;
 
@@ -24,8 +25,7 @@ class MovieDetailScreen extends StatefulWidget {
 class _MovieDetailScreenState extends State<MovieDetailScreen> {
   @override
   void initState() {
-    BlocProvider.of<ShowBloc>(context)
-        .add(ShowDetailEvent(widget.showModel.id!));
+    BlocProvider.of<ShowBloc>(context).add(ShowDetailEvent(widget.show.id!));
     super.initState();
   }
 
@@ -33,7 +33,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.showModel.name!),
+        title: Text(widget.show.name!),
       ),
       body: BlocBuilder<ShowBloc, ShowState>(builder: (context, state) {
         if (state is DetailLoadedState) {

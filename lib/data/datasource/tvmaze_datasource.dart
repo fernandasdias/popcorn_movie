@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:PopcornMovie/data/models/show.dart';
 import 'package:PopcornMovie/data/models/show_detail.dart';
 import 'package:PopcornMovie/domain/entities/show.dart';
+import 'package:PopcornMovie/data/models/showListModel.dart';
+import 'package:PopcornMovie/domain/entities/showList.dart';
 import 'package:http/http.dart' show Client;
 
 class TvMazeDatasource {
@@ -14,7 +16,7 @@ class TvMazeDatasource {
       final response = await client.get(Uri.parse(url));
       if (response.statusCode == 200) {
         // print(response.toString());
-        return ShowList.fromJson(json.decode(response.body));
+        return ShowListModel().fromJson(json.decode(response.body));
       } else {
         throw Exception('Failed to get API content');
       }
@@ -49,8 +51,7 @@ class TvMazeDatasource {
     try {
       final response = await client.get(Uri.parse(url));
       if (response.statusCode == 200) {
-        // print(response.toString());
-        return ShowList.fromJson(json.decode(response.body));
+        return ShowListModel().fromJson(json.decode(response.body));
       } else {
         throw Exception('Failed to get API content');
       }

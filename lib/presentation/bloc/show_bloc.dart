@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:PopcornMovie/data/models/show.dart';
+import 'package:PopcornMovie/data/models/show_detail.dart';
 import 'package:PopcornMovie/domain/entities/show.dart';
 import 'package:PopcornMovie/domain/usecases/show_usecase.dart';
 import 'package:bloc/bloc.dart';
@@ -20,14 +21,23 @@ class ShowBloc extends Bloc<ShowEvent, ShowState> {
       print('calling show index event');
 
       yield* mapShowIndexEvent();
-    }
-    if (state is SearchShowEvent) yield* mapSearchShowEvent(event as SearchShowEvent);
+    } else if (state is ShowDetailEvent) {
+      print('calling show detail event');
+      yield* mapShowDetailEvent(event as ShowDetailEvent);
+    } else if (state is SearchShowEvent)
+      yield* mapSearchShowEvent(event as SearchShowEvent);
   }
 
   Stream<ShowState> mapShowIndexEvent() async* {
     yield LoadingState();
     ShowList show = await ShowUseCase.showIndex();
     yield IndexLoadedState(show);
+  }
+
+  Stream<ShowState> mapShowDetailEvent(ShowDetailEvent event) async* {
+    yield LoadingState();
+    ShowDetailList showDetail = await ShowUseCase.showDetail(event.id);
+    yield DetailLoadedState(showDetail);
   }
 
   Stream<ShowState> mapSearchShowEvent(SearchShowEvent event) async* {

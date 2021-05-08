@@ -94,7 +94,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       itemCount: shows.length,
                       itemBuilder: (BuildContext ctx, index) {
-                        return MovieCard(showModel: shows[index]);
+                        return MovieCard(
+                          showModel: shows[index],
+                          context: context,
+                        );
                       },
                     ),
                   ),

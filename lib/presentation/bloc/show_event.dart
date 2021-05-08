@@ -9,6 +9,12 @@ abstract class ShowEvent extends Equatable {
 
 class ShowIndexEvent extends ShowEvent {}
 
+class ShowDetailEvent extends ShowEvent {
+  final int id;
+
+  ShowDetailEvent(this.id);
+}
+
 class SearchShowEvent extends ShowEvent {
   final String search;
 

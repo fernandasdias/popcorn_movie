@@ -1,5 +1,4 @@
 import 'package:PopcornMovie/domain/entities/show.dart';
-import 'package:flutter/material.dart';
 
 class ShowDetailList {
   late ShowDetail showDetail;

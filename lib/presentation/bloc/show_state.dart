@@ -15,6 +15,12 @@ class IndexLoadedState extends ShowState {
   IndexLoadedState(this.show);
 }
 
+class DetailLoadedState extends ShowState {
+  final ShowDetailList show;
+
+  DetailLoadedState(this.show);
+}
+
 class LoadingState extends ShowState {}
 
 class FailureState extends ShowState {}

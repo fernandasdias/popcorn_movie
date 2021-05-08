@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:PopcornMovie/data/models/show.dart';
+import 'package:PopcornMovie/data/models/show_detail.dart';
 import 'package:PopcornMovie/domain/entities/show.dart';
 import 'package:http/http.dart' show Client;
 
@@ -14,6 +15,24 @@ class TvMazeDatasource {
       if (response.statusCode == 200) {
         // print(response.toString());
         return ShowList.fromJson(json.decode(response.body));
+      } else {
+        throw Exception('Failed to get API content');
+      }
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
+  }
+
+  static Future<ShowDetailList> showDetail(int id) async {
+    Client client = Client();
+    String url = 'http://api.tvmaze.com/shows/$id?embed=cast';
+
+    try {
+      final response = await client.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        // print(response.toString());
+        return ShowDetailList.fromJson(json.decode(response.body));
       } else {
         throw Exception('Failed to get API content');
       }

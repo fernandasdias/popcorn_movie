@@ -1,23 +1,33 @@
+import 'package:PopcornMovie/presentation/bloc/show_bloc.dart';
 import 'package:PopcornMovie/ui/screens/movie_detail/movie_detail_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:PopcornMovie/data/models/show.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MovieCard extends StatelessWidget {
   const MovieCard({
     Key? key,
     required this.showModel,
+    required this.context,
   }) : super(key: key);
 
   final ShowModel showModel;
+  final BuildContext context;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (_) => MovieDetailScreen(showModel: showModel))),
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) => MovieDetailScreen(
+                      showModel: showModel,
+                      context: context,
+                      // bloc: BlocProvider.of<ShowBloc>(context),
+                    )));
+      },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [

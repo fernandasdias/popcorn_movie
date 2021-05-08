@@ -62,63 +62,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   CarouselSlider(
                     items: [
-                      Container(
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.8),
-                              spreadRadius: 2,
-                              blurRadius: 5,
-                              offset:
-                                  Offset(3, 3), // changes position of shadow
-                            ),
-                          ],
-                          // border: Border.all(),
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(30),
-                          child: Image.network(shows[70].imageOriginal),
-                        ),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.8),
-                              spreadRadius: 2,
-                              blurRadius: 5,
-                              offset:
-                                  Offset(3, 3), // changes position of shadow
-                            ),
-                          ],
-                          // border: Border.all(),
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(30),
-                          child: Image.network(shows[80].imageOriginal),
-                        ),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.8),
-                              spreadRadius: 2,
-                              blurRadius: 5,
-                              offset:
-                                  Offset(3, 3), // changes position of shadow
-                            ),
-                          ],
-                          // border: Border.all(),
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(30),
-                          child: Image.network(shows[90].imageOriginal),
-                        ),
-                      )
+                      CarouselItem(shows: shows[70]),
+                      CarouselItem(shows: shows[80]),
+                      CarouselItem(shows: shows[90]),
                     ],
                     options: CarouselOptions(
                       enlargeCenterPage: true,
@@ -265,5 +211,38 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),*/
         );
+  }
+}
+
+class CarouselItem extends StatelessWidget {
+  const CarouselItem({
+    Key? key,
+    required this.shows,
+  }) : super(key: key);
+
+  final Show shows;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      child: Container(
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.8),
+              spreadRadius: 2,
+              blurRadius: 5,
+              offset: Offset(3, 3), // changes position of shadow
+            ),
+          ],
+          // border: Border.all(),
+          borderRadius: BorderRadius.circular(30),
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(30),
+          child: Image.network(shows.imageOriginal),
+        ),
+      ),
+    );
   }
 }

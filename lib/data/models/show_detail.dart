@@ -1,20 +1,15 @@
 import 'package:PopcornMovie/domain/entities/show.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
-class ShowList {
-  List<ShowModel> showList = [];
-  ShowList.fromJson(List<dynamic> json) {
-    if (json != null) {
-      json.forEach((element) {
-        showList.add(ShowModel.fromJson(element));
-        // count++;
-      });
-    }
+class ShowDetailList {
+  ShowDetail showDetail;
+  ShowDetailList.fromJson(dynamic json) {
+    showDetail = ShowDetail.fromJson(json);
   }
 }
 
-class ShowModel extends Show {
-  ShowModel({
+class ShowDetail extends Show {
+  ShowDetail({
     @required int id,
     @required String name,
     @required dynamic image,
@@ -42,10 +37,8 @@ class ShowModel extends Show {
           network: network,
         );
 
-  factory ShowModel.fromJson(Map<String, dynamic> json) {
-    print(json['rating']['average']);
-
-    return ShowModel(
+  factory ShowDetail.fromJson(Map<String, dynamic> json) {
+    return ShowDetail(
       id: (json['id'] as num).toInt(),
       name: json['name'],
       image: json['image']['medium'],

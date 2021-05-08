@@ -20,11 +20,14 @@ class MovieCard extends StatelessWidget {
             showModel.name,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Image.network(
-              showModel.image,
-              fit: BoxFit.cover,
+          Padding(
+            padding: const EdgeInsets.all(9.0),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Image.network(
+                showModel.image,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           Text(

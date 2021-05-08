@@ -1,3 +1,4 @@
+import 'package:PopcornMovie/data/models/show.dart';
 import 'package:PopcornMovie/presentation/bloc/show_bloc.dart';
 import 'package:PopcornMovie/ui/theme/colors.dart';
 import 'package:flutter/material.dart';
@@ -29,20 +30,49 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Popcorn Movie',
-          style: TextStyle(
-              fontFamily: GoogleFonts.permanentMarker().fontFamily,
-              color: kSecundaryColorDarkest,
-              fontWeight: FontWeight.w900,
-              fontSize: 32,
-              letterSpacing: 1.8),
+        appBar: AppBar(
+          title: Text(
+            'Popcorn Movie',
+            style: TextStyle(
+                fontFamily: GoogleFonts.permanentMarker().fontFamily,
+                color: kSecundaryColorDarkest,
+                fontWeight: FontWeight.w900,
+                fontSize: 32,
+                letterSpacing: 1.8),
+          ),
+          backgroundColor: kPrimaryColorLightest,
+          shadowColor: Colors.transparent,
         ),
-        backgroundColor: kPrimaryColorLightest,
-        shadowColor: Colors.transparent,
-      ),
-      body: Container(
+        body: SafeArea(
+          minimum: EdgeInsets.all(12),
+          child: BlocBuilder<ShowBloc, ShowState>(builder: (context, state) {
+            if (state is IndexLoadedState) {
+              print('index loaded with sucess');
+              List<ShowModel> shows = state.show.showList;
+              // int lenght = shows.length;
+              // ShowModel showModel = state.show.showList[0];
+              // ShowModel showModel2 = state.show.showList[1];
+
+              return GridView.builder(
+                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 200,
+                  childAspectRatio: 0.55,
+                  crossAxisSpacing: 20,
+                  mainAxisSpacing: 20,
+                ),
+                itemCount: shows.length,
+                itemBuilder: (BuildContext ctx, index) {
+                  return MovieCard(showModel: shows[index]);
+                },
+              );
+            }
+
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }),
+        )
+        /*Container(
         color: kPrimaryColorLightest,
         child: SafeArea(
           minimum: EdgeInsets.all(16),
@@ -72,22 +102,75 @@ class _HomeScreenState extends State<HomeScreen> {
                     keyboardType: TextInputType.text,
                   ),
                 ),
+                SizedBox(
+                  height: 24,
+                ),
                 BlocBuilder<ShowBloc, ShowState>(builder: (context, state) {
                   if (state is IndexLoadedState) {
                     print('index loaded with sucess');
+                    List<ShowModel> shows = state.show.showList;
+                    // int lenght = shows.length;
+                    // ShowModel showModel = state.show.showList[0];
+                    // ShowModel showModel2 = state.show.showList[1];
+
+                    return GridView.builder(
+              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 200,
+                childAspectRatio: 0.55,
+                crossAxisSpacing: 20,
+                mainAxisSpacing: 20,
+              ),
+              itemCount: shows.length,
+              itemBuilder: (BuildContext ctx, index) {
+                return MovieCard(showModel: shows[index]);
+              },
+            );
                   }
+
                   return Center(
-                    child: Text('Helena'),
+                    child: CircularProgressIndicator(),
                   );
-                  /*GridView(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                  ));*/
                 })
               ],
             ),
           ),
         ),
+      ),*/
+        );
+  }
+}
+
+class MovieCard extends StatelessWidget {
+  const MovieCard({
+    Key key,
+    @required this.showModel,
+  }) : super(key: key);
+
+  final ShowModel showModel;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      // color: Colors.red,
+      child: Column(
+        children: [
+          Text(
+            showModel.name,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ),
+          Container(
+            height: 220,
+            width: 200,
+            child: Image.network(
+              showModel.image,
+              fit: BoxFit.cover,
+            ),
+          ),
+          Text(
+            showModel.status,
+            style: TextStyle(fontSize: 12),
+          )
+        ],
       ),
     );
   }

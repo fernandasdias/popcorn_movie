@@ -54,17 +54,47 @@ class _HomeScreenState extends State<HomeScreen> {
               // ShowModel showModel = state.show.showList[0];
               // ShowModel showModel2 = state.show.showList[1];
 
-              return GridView.builder(
-                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 200,
-                  childAspectRatio: 0.55,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 20,
-                ),
-                itemCount: shows.length,
-                itemBuilder: (BuildContext ctx, index) {
-                  return MovieCard(showModel: shows[index]);
-                },
+              return Column(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      // color: Colors.blueGrey,
+                      child: ListView.builder(
+                          // padding: EdgeInsets.symmetric(horizontal: 30),
+                          itemCount: 6,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (BuildContext ctx, index) {
+                            return Container(
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(30),
+                                child: Image.network(
+                                  shows[index].imageOriginal,
+                                  width: MediaQuery.of(context).size.width - 30,
+                                  fit: BoxFit.fitWidth,
+                                ),
+                              ),
+                            );
+                          }),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 3,
+                    child: GridView.builder(
+                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 200,
+                        childAspectRatio: 0.55,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 20,
+                      ),
+                      itemCount: shows.length,
+                      itemBuilder: (BuildContext ctx, index) {
+                        return MovieCard(showModel: shows[index]);
+                      },
+                    ),
+                  ),
+                ],
               );
             }
 

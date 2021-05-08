@@ -5,10 +5,17 @@ class Show extends Equatable {
   final String name;
   final String status;
   final dynamic image;
+  final dynamic imageOriginal;
   final dynamic summary;
 
-  Show({this.id, this.name, this.status, this.image, this.summary});
+  Show(
+      {this.imageOriginal,
+      this.id,
+      this.name,
+      this.status,
+      this.image,
+      this.summary});
 
   @override
-  List<Object> get props => [id, status, image, summary];
+  List<Object> get props => [id, status, image, summary, imageOriginal];
 }

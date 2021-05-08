@@ -1,11 +1,9 @@
 import 'package:PopcornMovie/domain/entities/show.dart';
-import 'package:PopcornMovie/ui/screens/movie_detail/movie_detail_screen.dart';
+import 'package:PopcornMovie/ui/screens/home/widgets/CarouselItem.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import 'package:PopcornMovie/data/models/show.dart';
 import 'package:PopcornMovie/presentation/bloc/show_bloc.dart';
 import 'package:PopcornMovie/ui/theme/colors.dart';
 import 'widgets/movie_card.dart';
@@ -55,9 +53,6 @@ class _HomeScreenState extends State<HomeScreen> {
             if (state is IndexLoadedState) {
               print('index loaded with sucess');
               List<Show> shows = state.show.showList;
-              // int lenght = shows.length;
-              // ShowModel showModel = state.show.showList[0];
-              // ShowModel showModel2 = state.show.showList[1];
 
               return Column(
                 children: [
@@ -70,56 +65,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     options: CarouselOptions(
                       enlargeCenterPage: true,
                       aspectRatio: 1.4,
-                      // onPageChanged: null,
                       autoPlay: false,
                     ),
                     carouselController: _controller,
                   ),
                   Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        // Flexible(
-                        //   child: TextButton(
-                        //     onPressed: () => _controller.previousPage(),
-                        //     child: Text('←'),
-                        //   ),
-                        // ),
-                        // Flexible(
-                        //   child: TextButton(
-                        //     onPressed: () => _controller.nextPage(),
-                        //     child: Text('→'),
-                        //   ),
-                        // ),
-                        // ...Iterable<int>.generate(3).map(
-                        //   (int pageIndex) => Flexible(
-                        //     child: TextButton(
-                        //       onPressed: () =>
-                        //           _controller.animateToPage(pageIndex),
-                        //       child: Text("$pageIndex"),
-                        //     ),
-                        //   ),
-                        // ),
-                        // child: Container(
-                        //   // color: Colors.blueGrey,
-                        //   child: ListView.builder(
-                        //       // padding: EdgeInsets.symmetric(horizontal: 30),
-                        //       itemCount: 6,
-                        //       scrollDirection: Axis.horizontal,
-                        //       itemBuilder: (BuildContext ctx, index) {
-                        //         return Container(
-                        //           padding: EdgeInsets.symmetric(horizontal: 10),
-                        //           child: ClipRRect(
-                        //             borderRadius: BorderRadius.circular(30),
-                        //             child: Image.network(
-                        //               shows[index].imageOriginal,
-                        //               width: MediaQuery.of(context).size.width - 30,
-                        //               fit: BoxFit.fitWidth,
-                        //             ),
-                        //           ),
-                        //         );
-                        //       }),
-                        // ),
-                      ]),
+                      children: <Widget>[]),
                   SizedBox(
                     height: 16,
                   ),
@@ -147,43 +99,5 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           }),
         ));
-  }
-}
-
-class CarouselItem extends StatelessWidget {
-  const CarouselItem({
-    Key? key,
-    required this.shows,
-  }) : super(key: key);
-
-  final Show shows;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => MovieDetailScreen(showModel: shows),
-          )),
-      child: Container(
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.8),
-              spreadRadius: 2,
-              blurRadius: 5,
-              offset: Offset(3, 3), // changes position of shadow
-            ),
-          ],
-          // border: Border.all(),
-          borderRadius: BorderRadius.circular(30),
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(30),
-          child: Image.network(shows.imageOriginal),
-        ),
-      ),
-    );
   }
 }

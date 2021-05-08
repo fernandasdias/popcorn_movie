@@ -1,9 +1,31 @@
+import 'package:PopcornMovie/presentation/bloc/show_bloc.dart';
 import 'package:PopcornMovie/ui/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreenProvider extends StatefulWidget {
+  @override
+  _HomeScreenProviderState createState() => _HomeScreenProviderState();
+}
+
+class _HomeScreenProviderState extends State<HomeScreenProvider> {
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => ShowBloc()..add(ShowIndexEvent()),
+      child: HomeScreen(),
+    );
+  }
+}
+
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +63,7 @@ class HomeScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(24),
                         ),
                         filled: true,
-                        fillColor: kPrimaryColorLight,
+                        fillColor: kPrimaryColorLightest,
                         prefixIcon: Icon(
                           Icons.search_outlined,
                           color: kPrimaryColorDark,
@@ -50,10 +72,18 @@ class HomeScreen extends StatelessWidget {
                     keyboardType: TextInputType.text,
                   ),
                 ),
-                GridView(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                ))
+                BlocBuilder<ShowBloc, ShowState>(builder: (context, state) {
+                  if (state is IndexLoadedState) {
+                    print('index loaded with sucess');
+                  }
+                  return Center(
+                    child: Text('Helena'),
+                  );
+                  /*GridView(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                  ));*/
+                })
               ],
             ),
           ),

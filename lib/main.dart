@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: GoogleFonts.notoSans().fontFamily,
       ),
-      home: HomeScreen(),
+      home: HomeScreenProvider(),
     );
   }
 }

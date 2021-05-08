@@ -1,3 +1,4 @@
+import 'package:PopcornMovie/ui/screens/movie_detail/movie_detail_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:PopcornMovie/data/models/show.dart';
@@ -12,7 +13,11 @@ class MovieCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return InkWell(
+      onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (_) => MovieDetailScreen(showModel: showModel))),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [

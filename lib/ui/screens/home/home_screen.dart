@@ -79,6 +79,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           }),
                     ),
                   ),
+                  SizedBox(
+                    height: 16,
+                  ),
                   Expanded(
                     flex: 3,
                     child: GridView.builder(

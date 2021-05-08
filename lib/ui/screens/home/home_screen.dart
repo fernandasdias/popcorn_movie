@@ -1,4 +1,5 @@
 import 'package:PopcornMovie/domain/entities/show.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -30,6 +31,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final CarouselController _controller = CarouselController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,29 +60,119 @@ class _HomeScreenState extends State<HomeScreen> {
 
               return Column(
                 children: [
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      // color: Colors.blueGrey,
-                      child: ListView.builder(
-                          // padding: EdgeInsets.symmetric(horizontal: 30),
-                          itemCount: 6,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (BuildContext ctx, index) {
-                            return Container(
-                              padding: EdgeInsets.symmetric(horizontal: 10),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(30),
-                                child: Image.network(
-                                  shows[index].imageOriginal,
-                                  width: MediaQuery.of(context).size.width - 30,
-                                  fit: BoxFit.fitWidth,
-                                ),
-                              ),
-                            );
-                          }),
+                  CarouselSlider(
+                    items: [
+                      Container(
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.8),
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              offset:
+                                  Offset(3, 3), // changes position of shadow
+                            ),
+                          ],
+                          // border: Border.all(),
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(30),
+                          child: Image.network(shows[70].imageOriginal),
+                        ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.8),
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              offset:
+                                  Offset(3, 3), // changes position of shadow
+                            ),
+                          ],
+                          // border: Border.all(),
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(30),
+                          child: Image.network(shows[80].imageOriginal),
+                        ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.8),
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              offset:
+                                  Offset(3, 3), // changes position of shadow
+                            ),
+                          ],
+                          // border: Border.all(),
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(30),
+                          child: Image.network(shows[90].imageOriginal),
+                        ),
+                      )
+                    ],
+                    options: CarouselOptions(
+                      enlargeCenterPage: true,
+                      aspectRatio: 1.4,
+                      // onPageChanged: null,
+                      autoPlay: false,
                     ),
+                    carouselController: _controller,
                   ),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        // Flexible(
+                        //   child: TextButton(
+                        //     onPressed: () => _controller.previousPage(),
+                        //     child: Text('←'),
+                        //   ),
+                        // ),
+                        // Flexible(
+                        //   child: TextButton(
+                        //     onPressed: () => _controller.nextPage(),
+                        //     child: Text('→'),
+                        //   ),
+                        // ),
+                        // ...Iterable<int>.generate(3).map(
+                        //   (int pageIndex) => Flexible(
+                        //     child: TextButton(
+                        //       onPressed: () =>
+                        //           _controller.animateToPage(pageIndex),
+                        //       child: Text("$pageIndex"),
+                        //     ),
+                        //   ),
+                        // ),
+                        // child: Container(
+                        //   // color: Colors.blueGrey,
+                        //   child: ListView.builder(
+                        //       // padding: EdgeInsets.symmetric(horizontal: 30),
+                        //       itemCount: 6,
+                        //       scrollDirection: Axis.horizontal,
+                        //       itemBuilder: (BuildContext ctx, index) {
+                        //         return Container(
+                        //           padding: EdgeInsets.symmetric(horizontal: 10),
+                        //           child: ClipRRect(
+                        //             borderRadius: BorderRadius.circular(30),
+                        //             child: Image.network(
+                        //               shows[index].imageOriginal,
+                        //               width: MediaQuery.of(context).size.width - 30,
+                        //               fit: BoxFit.fitWidth,
+                        //             ),
+                        //           ),
+                        //         );
+                        //       }),
+                        // ),
+                      ]),
                   SizedBox(
                     height: 16,
                   ),

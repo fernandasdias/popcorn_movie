@@ -1,10 +1,11 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 import 'package:PopcornMovie/data/models/show.dart';
 import 'package:PopcornMovie/presentation/bloc/show_bloc.dart';
 import 'package:PopcornMovie/ui/theme/colors.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'widgets/movie_card.dart';
 
 class HomeScreenProvider extends StatefulWidget {
   @override
@@ -137,41 +138,5 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),*/
         );
-  }
-}
-
-class MovieCard extends StatelessWidget {
-  const MovieCard({
-    Key key,
-    @required this.showModel,
-  }) : super(key: key);
-
-  final ShowModel showModel;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      // color: Colors.red,
-      child: Column(
-        children: [
-          Text(
-            showModel.name,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ),
-          Container(
-            height: 220,
-            width: 200,
-            child: Image.network(
-              showModel.image,
-              fit: BoxFit.cover,
-            ),
-          ),
-          Text(
-            showModel.status,
-            style: TextStyle(fontSize: 12),
-          )
-        ],
-      ),
-    );
   }
 }

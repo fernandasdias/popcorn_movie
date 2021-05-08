@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 class ShowList {
   List<ShowModel> showList = [];
   ShowList.fromJson(List<dynamic> json) {
-    int count = 0;
     if (json != null) {
       json.forEach((element) {
         showList.add(ShowModel.fromJson(element));

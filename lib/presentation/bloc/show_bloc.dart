@@ -1,5 +1,8 @@
 import 'dart:async';
 
+import 'package:PopcornMovie/data/models/show.dart';
+import 'package:PopcornMovie/domain/entities/show.dart';
+import 'package:PopcornMovie/domain/usecases/show_usecase.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -14,12 +17,14 @@ class ShowBloc extends Bloc<ShowEvent, ShowState> {
     ShowEvent event,
   ) async* {
     if (event is ShowIndexEvent) {
+      print('calling show index event');
+
       yield* mapShowIndexEvent();
     }
   }
 
   Stream<ShowState> mapShowIndexEvent() async* {
-    //chamar usecase -> repository -> datasource
-    yield IndexLoadedState();
+    ShowList show = await ShowUseCase.showIndex();
+    yield IndexLoadedState(show);
   }
 }

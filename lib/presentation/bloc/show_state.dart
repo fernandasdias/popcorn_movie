@@ -9,6 +9,10 @@ abstract class ShowState extends Equatable {
 
 class ShowInitial extends ShowState {}
 
-class IndexLoadedState extends ShowState {}
+class IndexLoadedState extends ShowState {
+  final ShowList show;
+
+  IndexLoadedState(this.show);
+}
 
 class FailureState extends ShowState {}

@@ -18,8 +18,8 @@ class _HomeScreenProviderState extends State<HomeScreenProvider> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          // ShowBloc()..add(ShowIndexEvent()), //add(SearchShowEvent('girls')),
-          ShowBloc()..add(ShowDetailEvent(1)), //add(SearchShowEvent('girls')),
+          ShowBloc()..add(ShowIndexEvent()), //add(SearchShowEvent('girls')),
+      // ShowBloc()..add(ShowDetailEvent(1)), //add(SearchShowEvent('girls')),
       child: HomeScreen(),
     );
   }
@@ -51,15 +51,15 @@ class _HomeScreenState extends State<HomeScreen> {
         body: SafeArea(
           minimum: EdgeInsets.all(12),
           child: BlocBuilder<ShowBloc, ShowState>(builder: (context, state) {
-            if (state is DetailLoadedState) {
+            /*if (state is DetailLoadedState) {
               return Center(
                 child: MovieCard(
                   context: context,
                   show: state.show.showDetail,
                 ),
               );
-            }
-            /*if (state is IndexLoadedState) {
+            }*/
+            if (state is IndexLoadedState) {
               print('index loaded with sucess');
               List<Show> shows = state.show.showList;
 
@@ -104,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
               );
-            }*/
+            }
 
             return Center(
               child: CircularProgressIndicator(),

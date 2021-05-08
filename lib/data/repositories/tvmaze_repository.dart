@@ -5,4 +5,8 @@ class TvMazeRepository {
   static Future<ShowList> showIndex() async {
     return await TvMazeDatasource.showIndex();
   }
+
+  static Future<ShowList> searchShow(String search) async {
+    return await TvMazeDatasource.searchShow(search);
+  }
 }

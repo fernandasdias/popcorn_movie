@@ -15,4 +15,6 @@ class IndexLoadedState extends ShowState {
   IndexLoadedState(this.show);
 }
 
+class LoadingState extends ShowState {}
+
 class FailureState extends ShowState {}

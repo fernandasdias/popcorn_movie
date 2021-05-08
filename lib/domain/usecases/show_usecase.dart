@@ -4,9 +4,12 @@ import 'package:PopcornMovie/domain/entities/show.dart';
 
 class ShowUseCase {
   static Future<ShowList> showIndex() async {
-    ShowList _show = await TvMazeRepository.showIndex();
+    return await TvMazeRepository.showIndex();
+  }
 
-    print('stop');
+  static Future<ShowList> searchShow(String search) async {
+    ShowList _show = await TvMazeRepository.searchShow(search);
+
     return _show;
   }
 }

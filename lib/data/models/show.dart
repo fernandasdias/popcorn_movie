@@ -31,7 +31,7 @@ class ShowModel extends Show {
         );
 
   factory ShowModel.fromJson(Map<String, dynamic> json) {
-    print(json['rating']['average']);
+    // print(json['rating']['average']);
 
     return ShowModel(
       id: (json['id'] as num).toInt(),
@@ -43,7 +43,7 @@ class ShowModel extends Show {
       type: json['type'],
       genres: json['genres'],
       runtime: json['runtime'] ?? -1,
-      average: json['rating'],
+      average: json['rating']['average'] ?? 0,
       schedule: json['schedule'],
       network: json['network'],
     );

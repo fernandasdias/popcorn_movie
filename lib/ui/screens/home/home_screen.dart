@@ -33,7 +33,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final CarouselController _controller = CarouselController();
+  final ValueNotifier<double> notifier = ValueNotifier(0);
+  static const double HEIGHT = 700;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,41 +68,38 @@ class _HomeScreenState extends State<HomeScreen> {
 
               return Column(
                 children: [
-                  CarouselSlider(
-                    items: [
-                      CarouselItem(shows: shows[70]),
-                      CarouselItem(shows: shows[80]),
-                      CarouselItem(shows: shows[90]),
-                    ],
-                    options: CarouselOptions(
-                      enlargeCenterPage: true,
-                      aspectRatio: 1.4,
-                      autoPlay: false,
-                    ),
-                    carouselController: _controller,
+                  HideableWidget(
+                    height: HEIGHT,
+                    shows: shows,
+                    notifier: notifier,
                   ),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[]),
                   SizedBox(
                     height: 16,
                   ),
                   Expanded(
                     flex: 3,
-                    child: GridView.builder(
-                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: 200,
-                        childAspectRatio: 0.55,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 20,
-                      ),
-                      itemCount: shows.length,
-                      itemBuilder: (BuildContext ctx, index) {
-                        return MovieCard(
-                          show: shows[index],
-                          context: context,
-                        );
+                    child: NotificationListener<ScrollNotification>(
+                      onNotification: (n) {
+                        if (n.metrics.pixels <= HEIGHT) {
+                          notifier.value = n.metrics.pixels;
+                        }
+                        return false;
                       },
+                      child: GridView.builder(
+                        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                          maxCrossAxisExtent: 200,
+                          childAspectRatio: 0.55,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 20,
+                        ),
+                        itemCount: shows.length,
+                        itemBuilder: (BuildContext ctx, index) {
+                          return MovieCard(
+                            show: shows[index],
+                            context: context,
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ],
@@ -113,5 +111,44 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           }),
         ));
+  }
+}
+
+class HideableWidget extends StatelessWidget {
+  final List<Show> shows;
+  final double height;
+  final ValueNotifier<double> notifier;
+
+  HideableWidget(
+      {required this.height, required this.notifier, required this.shows});
+
+  @override
+  Widget build(BuildContext context) {
+    final CarouselController _controller = CarouselController();
+    return ValueListenableBuilder<double>(
+      valueListenable: notifier,
+      builder: (context, value, child) {
+        return Transform.translate(
+          offset: Offset(0, value - height),
+          child: Container(
+            height: 200,
+            // color: Colors.red,
+            child: CarouselSlider(
+              items: [
+                CarouselItem(shows: shows[70]),
+                CarouselItem(shows: shows[80]),
+                CarouselItem(shows: shows[90]),
+              ],
+              options: CarouselOptions(
+                enlargeCenterPage: true,
+                aspectRatio: 1.4,
+                autoPlay: false,
+              ),
+              carouselController: _controller,
+            ),
+          ),
+        );
+      },
+    );
   }
 }

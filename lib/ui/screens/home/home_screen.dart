@@ -9,6 +9,7 @@ import 'package:PopcornMovie/ui/theme/colors.dart';
 import 'widgets/movie_card.dart';
 
 class HomeScreenProvider extends StatefulWidget {
+  static const String routeName = '/home-provider';
   @override
   _HomeScreenProviderState createState() => _HomeScreenProviderState();
 }
@@ -26,6 +27,7 @@ class _HomeScreenProviderState extends State<HomeScreenProvider> {
 }
 
 class HomeScreen extends StatefulWidget {
+  static const String routeName = '/home';
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }

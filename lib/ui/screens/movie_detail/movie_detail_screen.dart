@@ -6,7 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:PopcornMovie/data/models/show.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'widgets/app_bar_detail.dart';
+
 class MovieDetailScreen extends StatefulWidget {
+  static const String routeName = '/movie-detail';
   const MovieDetailScreen({
     Key? key,
     required this.show,
@@ -23,19 +26,44 @@ class MovieDetailScreen extends StatefulWidget {
 }
 
 class _MovieDetailScreenState extends State<MovieDetailScreen> {
-  @override
+  /*@override
   void initState() {
     BlocProvider.of<ShowBloc>(context).add(ShowDetailEvent(widget.show.id!));
     super.initState();
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.show.name!),
-      ),
-      body: BlocBuilder<ShowBloc, ShowState>(builder: (context, state) {
+        appBar: AppBarDetail(
+          imagePath: widget.show.imageOriginal,
+          context: context,
+        ),
+        body: Container(
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Image.network(widget.show.image),
+                  Column(
+                    children: [
+                      Text(widget.show.name!),
+                      Text(widget.show.type!),
+                      Text(widget.show.genres.toString()),
+                      // Text('${showModel.average}'),
+                      // Text(
+                      //   showModel.network.toString(),
+                      //   softWrap: true,
+                      // ),
+                    ],
+                  )
+                ],
+              )
+            ],
+          ),
+        )
+        /*BlocBuilder<ShowBloc, ShowState>(builder: (context, state) {
         if (state is DetailLoadedState) {
           print('detail loaded with sucess');
           ShowDetail showDetail = state.show.showDetail;
@@ -68,7 +96,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
         return Center(
           child: CircularProgressIndicator(),
         );
-      }),
-    );
+      }),*/
+        );
   }
 }

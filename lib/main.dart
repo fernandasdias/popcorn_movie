@@ -1,3 +1,4 @@
+import 'package:PopcornMovie/ui/screens/movie_detail/movie_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -16,6 +17,12 @@ class MyApp extends StatelessWidget {
         fontFamily: GoogleFonts.notoSans().fontFamily,
       ),
       home: HomeScreenProvider(),
+      routes: {
+        HomeScreenProvider.routeName: (ctx) => HomeScreenProvider(),
+        HomeScreen.routeName: (ctx) => HomeScreen(),
+        // MovieDetailScreen.routeName: (ctx) =>
+        //     MovieDetailScreen(show: show, context: context)
+      },
     );
   }
 }

@@ -1,5 +1,4 @@
 import 'package:PopcornMovie/data/datasource/tvmaze_datasource.dart';
-import 'package:PopcornMovie/data/models/show.dart';
 import 'package:PopcornMovie/data/models/show_detail.dart';
 import 'package:PopcornMovie/domain/entities/showList.dart';
 
@@ -8,7 +7,7 @@ class TvMazeRepository {
     return await TvMazeDatasource.showIndex();
   }
 
-  static Future<ShowDetailList> showDetail(int id) async {
+  static Future<ShowDetail> showDetail(int id) async {
     return await TvMazeDatasource.showDetail(id);
   }
 

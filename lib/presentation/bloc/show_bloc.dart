@@ -37,8 +37,8 @@ class ShowBloc extends Bloc<ShowEvent, ShowState> {
   }
 
   Stream<ShowState> mapShowDetailEvent(ShowDetailEvent event) async* {
-    yield LoadingState();
-    ShowDetailList showDetail = await ShowUseCase.showDetail(event.id);
+    //yield LoadingState();
+    ShowDetail showDetail = await ShowUseCase.showDetail(event.id);
     yield DetailLoadedState(showDetail);
   }
 

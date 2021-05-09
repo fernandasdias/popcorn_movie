@@ -26,7 +26,7 @@ class TvMazeDatasource {
     }
   }
 
-  static Future<ShowDetailList> showDetail(int id) async {
+  static Future<ShowDetail> showDetail(int id) async {
     Client client = Client();
     String url = 'https://api.tvmaze.com/shows/$id?embed=cast';
 
@@ -34,7 +34,7 @@ class TvMazeDatasource {
       final response = await client.get(Uri.parse(url));
       if (response.statusCode == 200) {
         // print(response.toString());
-        return ShowDetailList.fromJson(json.decode(response.body));
+        return ShowDetail.fromJson(json.decode(response.body));
       } else {
         throw Exception('Failed to get API content');
       }

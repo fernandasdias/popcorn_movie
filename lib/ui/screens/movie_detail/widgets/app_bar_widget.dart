@@ -1,7 +1,9 @@
 import 'package:PopcornMovie/domain/entities/show.dart';
 import 'package:PopcornMovie/ui/screens/home/widgets/CarouselItem.dart';
+import 'package:PopcornMovie/ui/theme/colors.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AppBarWidget extends PreferredSize {
   final List<Show> shows;
@@ -26,6 +28,17 @@ class AppBarWidget extends PreferredSize {
                 //     children: [],
                 //   ),
                 // ),
+                // Text(
+                //   'Popcorn Movie',
+                //   style: TextStyle(
+                //       fontFamily: GoogleFonts.permanentMarker().fontFamily,
+                //       color: kSecundaryColorDarkest,
+                //       fontWeight: FontWeight.w900,
+                //       fontSize: 32,
+                //       letterSpacing: 1.8),
+                // ),
+                // backgroundColor: kPrimaryColorLightest,
+                // shadowColor: Colors.transparent,),
                 Align(
                   alignment: Alignment(0.0, 1.0),
                   child: CarouselSlider(

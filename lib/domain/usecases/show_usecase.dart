@@ -1,7 +1,5 @@
-import 'package:PopcornMovie/data/models/show.dart';
 import 'package:PopcornMovie/data/models/show_detail.dart';
 import 'package:PopcornMovie/data/repositories/tvmaze_repository.dart';
-import 'package:PopcornMovie/domain/entities/show.dart';
 import 'package:PopcornMovie/domain/entities/showList.dart';
 
 class ShowUseCase {
@@ -9,7 +7,7 @@ class ShowUseCase {
     return await TvMazeRepository.showIndex();
   }
 
-  static Future<ShowDetailList> showDetail(int id) async {
+  static Future<ShowDetail> showDetail(int id) async {
     return await TvMazeRepository.showDetail(id);
   }
 

@@ -1,11 +1,11 @@
 import 'package:PopcornMovie/domain/entities/show.dart';
 
-class ShowDetailList {
-  late ShowDetail showDetail;
-  ShowDetailList.fromJson(dynamic? json) {
-    showDetail = ShowDetail.fromJson(json);
-  }
-}
+// class ShowDetailList {
+//   late ShowDetail showDetail;
+//   ShowDetailList.fromJson(dynamic? json) {
+//     showDetail = ShowDetail.fromJson(json);
+//   }
+// }
 
 class ShowDetail extends Show {
   ShowDetail({

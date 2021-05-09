@@ -6,13 +6,14 @@ import 'package:flutter/material.dart';
 class AppBarWidget extends PreferredSize {
   final List<Show> shows;
   final CarouselController _controller;
+  final double height;
 
-  AppBarWidget(this.shows, this._controller)
+  AppBarWidget(this.shows, this._controller, this.height)
       : super(
-          preferredSize: Size.fromHeight(500),
+          preferredSize: Size.fromHeight(height),
           child: Container(
-            height: 400,
-            color: Colors.amber,
+            height: height,
+            // color: Colors.amber,
             child: Stack(
               children: [
                 // Container(

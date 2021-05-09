@@ -39,6 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final ValueNotifier<double> notifier = ValueNotifier(0);
   final CarouselController _controller = CarouselController();
   static const double HEIGHT = 400;
+  static const double APPBARHEIGHT = 200;
   late ScrollController _scrollViewController;
   bool _showAppbar = true;
   bool isScrollingDown = false;
@@ -108,9 +109,13 @@ class _HomeScreenState extends State<HomeScreen> {
           return Column(
             children: [
               AnimatedContainer(
-                height: _showAppbar ? 80.0 : 0.0,
+                height: _showAppbar ? APPBARHEIGHT : 0.0,
                 duration: Duration(milliseconds: 200),
-                child: AppBarWidget(shows, _controller),
+                child: AppBarWidget(
+                  shows,
+                  _controller,
+                  APPBARHEIGHT,
+                ),
                 // HideableWidget(
                 //   height: HEIGHT,
                 //   shows: shows,

@@ -34,7 +34,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final ValueNotifier<double> notifier = ValueNotifier(0);
-  static const double HEIGHT = 700;
+  final CarouselController _controller = CarouselController();
+  static const double HEIGHT = 400;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,23 +69,36 @@ class _HomeScreenState extends State<HomeScreen> {
 
               return Column(
                 children: [
-                  HideableWidget(
-                    height: HEIGHT,
-                    shows: shows,
-                    notifier: notifier,
+                  // HideableWidget(
+                  //   height: HEIGHT,
+                  //   shows: shows,
+                  //   notifier: notifier,
+                  // ),
+                  CarouselSlider(
+                    items: [
+                      CarouselItem(shows: shows[70]),
+                      CarouselItem(shows: shows[80]),
+                      CarouselItem(shows: shows[90]),
+                    ],
+                    options: CarouselOptions(
+                      enlargeCenterPage: true,
+                      aspectRatio: 1.4,
+                      autoPlay: false,
+                    ),
+                    carouselController: _controller,
                   ),
                   SizedBox(
                     height: 16,
                   ),
-                  Expanded(
-                    flex: 3,
-                    child: NotificationListener<ScrollNotification>(
-                      onNotification: (n) {
-                        if (n.metrics.pixels <= HEIGHT) {
-                          notifier.value = n.metrics.pixels;
-                        }
-                        return false;
-                      },
+                  NotificationListener<ScrollNotification>(
+                    onNotification: (n) {
+                      if (n.metrics.pixels >= HEIGHT) {
+                        notifier.value = n.metrics.pixels;
+                      }
+                      return false;
+                    },
+                    child: Expanded(
+                      flex: 3,
                       child: GridView.builder(
                         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                           maxCrossAxisExtent: 200,
@@ -114,41 +128,41 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class HideableWidget extends StatelessWidget {
-  final List<Show> shows;
-  final double height;
-  final ValueNotifier<double> notifier;
+// class HideableWidget extends StatelessWidget {
+//   final List<Show> shows;
+//   final double height;
+//   final ValueNotifier<double> notifier;
 
-  HideableWidget(
-      {required this.height, required this.notifier, required this.shows});
+//   HideableWidget(
+//       {required this.height, required this.notifier, required this.shows});
 
-  @override
-  Widget build(BuildContext context) {
-    final CarouselController _controller = CarouselController();
-    return ValueListenableBuilder<double>(
-      valueListenable: notifier,
-      builder: (context, value, child) {
-        return Transform.translate(
-          offset: Offset(0, value - height),
-          child: Container(
-            height: 200,
-            // color: Colors.red,
-            child: CarouselSlider(
-              items: [
-                CarouselItem(shows: shows[70]),
-                CarouselItem(shows: shows[80]),
-                CarouselItem(shows: shows[90]),
-              ],
-              options: CarouselOptions(
-                enlargeCenterPage: true,
-                aspectRatio: 1.4,
-                autoPlay: false,
-              ),
-              carouselController: _controller,
-            ),
-          ),
-        );
-      },
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     final CarouselController _controller = CarouselController();
+//     return ValueListenableBuilder<double>(
+//       valueListenable: notifier,
+//       builder: (context, value, child) {
+//         return Transform.translate(
+//           offset: Offset(0, value - height),
+//           child: Container(
+//             height: 200,
+//             // color: Colors.red,
+//             child: CarouselSlider(
+//               items: [
+//                 CarouselItem(shows: shows[70]),
+//                 CarouselItem(shows: shows[80]),
+//                 CarouselItem(shows: shows[90]),
+//               ],
+//               options: CarouselOptions(
+//                 enlargeCenterPage: true,
+//                 aspectRatio: 1.4,
+//                 autoPlay: false,
+//               ),
+//               carouselController: _controller,
+//             ),
+//           ),
+//         );
+//       },
+//     );
+//   }
+// }

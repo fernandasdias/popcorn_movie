@@ -2,16 +2,52 @@ import 'dart:math';
 
 import 'package:PopcornMovie/data/models/show_detail.dart';
 import 'package:PopcornMovie/domain/entities/show.dart';
-import 'package:PopcornMovie/presentation/bloc/show_bloc.dart';
+import 'package:PopcornMovie/presentation/show_detail_presenter.dart';
 import 'package:flutter/material.dart';
 import 'package:html/parser.dart';
-import '';
 
 import 'package:PopcornMovie/data/models/show.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'widgets/app_bar_detail.dart';
 import 'widgets/star_display.dart';
+
+class MovieDetailProvider extends StatefulWidget {
+  final Show show;
+  final ShowDetailPresenter presenter;
+  const MovieDetailProvider(
+      {Key? key, required this.show, required this.presenter})
+      : super(key: key);
+
+  @override
+  _MovieDetailProviderState createState() => _MovieDetailProviderState();
+}
+
+class _MovieDetailProviderState extends State<MovieDetailProvider> {
+  @override
+  void initState() {
+    widget.presenter.getShowDetail(widget.show.id!);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<ShowDetail>(
+        stream: widget.presenter.stepCounterStream,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            print('snapshot has data ${snapshot.data!.name!}');
+            return MovieDetailScreen(
+              show: snapshot.data!,
+              context: context,
+            );
+          } else
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+        });
+  }
+}
 
 class MovieDetailScreen extends StatefulWidget {
   static const String routeName = '/movie-detail';
@@ -22,7 +58,7 @@ class MovieDetailScreen extends StatefulWidget {
     // required this.bloc,
   }) : super(key: key);
 
-  final Show show;
+  final ShowDetail show;
   final BuildContext context;
   // final ShowBloc bloc;
 
@@ -31,11 +67,7 @@ class MovieDetailScreen extends StatefulWidget {
 }
 
 class _MovieDetailScreenState extends State<MovieDetailScreen> {
-  /*@override
-  void initState() {
-    BlocProvider.of<ShowBloc>(context).add(ShowDetailEvent(widget.show.id!));
-    super.initState();
-  }*/
+  // var detailPresenter = Provider.of<ShowDetailPresenter>(context);
 
   @override
   Widget build(BuildContext context) {
@@ -81,28 +113,37 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
       }
       return daysInput;
     }
+    // int avarage =
+    //     (widget.show.average == null) ? 0 : (widget.show.average).toInt();
+    // int value = (avarage * 0.5).toInt();
 
+    // return StreamBuilder<ShowDetail>(
+    //     stream: Provider.of<ShowDetailPresenter>(context).stepCounterStream,
+    //     builder: (context, snapshot) {
+    //       if (!snapshot.hasData) return CircularProgressIndicator();
+
+    //       ShowDetail detail = snapshot.data!;
+    //       print('snapshot ok ${detail.name}');
     return Scaffold(
         appBar: AppBarDetail(
           imagePath: widget.show.imageOriginal,
           context: context,
         ),
-        body: SingleChildScrollView(
-            child: Container(
-                /*decoration: BoxDecoration(
-              // Box decoration takes a gradient
-              gradient: LinearGradient(colors: [
-                // Colors are easy thanks to Flutter's Colors class.
-                Color(0xFF100328).withOpacity(0.8),
-                Color(0xFF010332).withOpacity(0.8),
-                Color(0xFF29011C).withOpacity(0.9),
-              ], stops: [
-                0.0,
-                0.595,
-                0.845,
-              ], transform: GradientRotation(2.13959913 * pi)),
-            ),*/
-                child: Column(
+        body: Container(
+            /*decoration: BoxDecoration(
+          // Box decoration takes a gradient
+          gradient: LinearGradient(colors: [
+            // Colors are easy thanks to Flutter's Colors class.
+            Color(0xFF100328).withOpacity(0.8),
+            Color(0xFF010332).withOpacity(0.8),
+            Color(0xFF29011C).withOpacity(0.9),
+          ], stops: [
+            0.0,
+            0.595,
+            0.845,
+          ], transform: GradientRotation(2.13959913 * pi)),
+        ),*/
+            child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
@@ -133,140 +174,103 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
             SizedBox(
               height: 56,
             ),
-            SingleChildScrollView(
-              child: Container(
-                color: Colors.amber,
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Column(
-                          children: [
-                            Text('Year'),
-                            Text('Year'),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Text('Duration'),
-                            Row(
-                              children: [
-                                Icon(Icons.access_time),
-                                Text('${widget.show.runtime!} min')
-                              ],
-                            )
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Text('Rating'),
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.star,
-                                  color: Colors.red,
-                                ),
-                                Text('${widget.show.average!}/10')
-                              ],
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Column(
-                          children: [
-                            Text('Network'),
-                            Text(widget.show.network['name']),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Text('Schedule'),
-                            Row(
-                              children: [
-                                Column(
-                                  children: [...days()!],
-                                ),
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                Text(widget.show.schedule['time']!),
-                              ],
-                            )
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Text('Status'),
-                            Text('${widget.show.status!}')
-                          ],
-                        ),
-                      ],
-                    ),
-                    Container(
-                      // color: Colors.red,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text('Sumary',
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.bold)),
-                            Text(_parseHtmlString(widget.show.summary),
-                                textAlign: TextAlign.justify,
-                                style: TextStyle(fontSize: 16)),
-                            Text('Cast',
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.bold)),
-                          ],
-                        ),
+            Container(
+              color: Colors.amber,
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Column(
+                        children: [
+                          Text('Year'),
+                          Text('Year'),
+                        ],
                       ),
-                    )
-                  ],
-                ),
+                      Column(
+                        children: [
+                          Text('Duration'),
+                          Row(
+                            children: [
+                              Icon(Icons.access_time),
+                              Text('${widget.show.runtime!} min')
+                            ],
+                          )
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Text('Rating'),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.star,
+                                color: Colors.red,
+                              ),
+                              Text('${widget.show.average!}/10')
+                            ],
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Column(
+                        children: [
+                          Text('Network'),
+                          Text(widget.show.network['name']),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Text('Schedule'),
+                          Row(
+                            children: [
+                              Column(
+                                children: [...days()!],
+                              ),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Text(widget.show.schedule['time']!),
+                            ],
+                          )
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Text('Status'),
+                          Text('${widget.show.status!}')
+                        ],
+                      ),
+                    ],
+                  ),
+                  Container(
+                    // color: Colors.red,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text('Sumary',
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold)),
+                          Text(_parseHtmlString(widget.show.summary),
+                              textAlign: TextAlign.justify,
+                              style: TextStyle(fontSize: 16)),
+                          Text('Cast',
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
               ),
             ),
           ],
-        ))
-            /*BlocBuilder<ShowBloc, ShowState>(builder: (context, state) {
-        if (state is DetailLoadedState) {
-          print('detail loaded with sucess');
-          ShowDetail showDetail = state.show.showDetail;
-
-          return Container(
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Image.network(showDetail.image),
-                    Column(
-                      children: [
-                        Text(showDetail.name!),
-                        Text(showDetail.type!),
-                        Text(showDetail.genres.toString()),
-                        // Text('${showModel.average}'),
-                        // Text(
-                        //   showModel.network.toString(),
-                        //   softWrap: true,
-                        // ),
-                      ],
-                    )
-                  ],
-                )
-              ],
-            ),
-          );
-        }
-        return Center(
-          child: CircularProgressIndicator(),
-        );
-      }),*/
-            ));
+        )));
   }
 }

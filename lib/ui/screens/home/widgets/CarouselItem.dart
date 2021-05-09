@@ -1,4 +1,5 @@
 import 'package:PopcornMovie/domain/entities/show.dart';
+import 'package:PopcornMovie/presentation/show_detail_presenter.dart';
 import 'package:PopcornMovie/ui/screens/movie_detail/movie_detail_screen.dart';
 
 import 'package:flutter/material.dart';
@@ -17,9 +18,9 @@ class CarouselItem extends StatelessWidget {
       onTap: () => Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (_) => MovieDetailScreen(
+            builder: (_) => MovieDetailProvider(
               show: shows,
-              context: context,
+              presenter: ShowDetailPresenter(),
             ),
           )),
       child: Container(

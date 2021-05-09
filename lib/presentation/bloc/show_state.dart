@@ -16,7 +16,7 @@ class IndexLoadedState extends ShowState {
 }
 
 class DetailLoadedState extends ShowState {
-  final ShowDetailList show;
+  final ShowDetail show;
 
   DetailLoadedState(this.show);
 }

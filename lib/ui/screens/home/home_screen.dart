@@ -85,8 +85,8 @@ class ShowListScreen extends StatefulWidget {
 class _ShowListScreenState extends State<ShowListScreen> {
   final ValueNotifier<double> notifier = ValueNotifier(0);
   final CarouselController _controller = CarouselController();
-  static const double HEIGHT = 400;
-  static const double APPBARHEIGHT = 250;
+  static const double HEIGHT = 600;
+  static const double APPBARHEIGHT = 300;
   final ScrollController _scrollViewController = new ScrollController();
   bool _showAppbar = true;
   bool isScrollingDown = false;
@@ -139,11 +139,8 @@ class _ShowListScreenState extends State<ShowListScreen> {
                   AnimatedContainer(
                     height: _showAppbar ? APPBARHEIGHT : 0.0,
                     duration: Duration(milliseconds: 200),
-                    child: AppBarWidget(
-                      shows,
-                      _controller,
-                      APPBARHEIGHT,
-                    ),
+                    child:
+                        AppBarWidget(shows, _controller, APPBARHEIGHT, context),
                   ),
                   SizedBox(
                     height: 16,

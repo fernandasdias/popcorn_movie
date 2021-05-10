@@ -8,6 +8,10 @@ import 'package:PopcornMovie/domain/entities/show.dart';
 // }
 
 class ShowDetail extends Show {
+  final String? premiered;
+  final String? officialSite;
+  final dynamic cast;
+
   ShowDetail({
     required int id,
     required String? name,
@@ -21,6 +25,9 @@ class ShowDetail extends Show {
     required dynamic average,
     required dynamic schedule,
     required dynamic network,
+    required this.premiered,
+    required this.officialSite,
+    required this.cast,
   }) : super(
           id: id,
           name: name,
@@ -51,6 +58,9 @@ class ShowDetail extends Show {
       average: json['rating'],
       schedule: json['schedule'],
       network: json['network'],
+      premiered: json['premiered'],
+      officialSite: json['officialSite'],
+      cast: json['_embedded']['cast'],
     );
   }
 }

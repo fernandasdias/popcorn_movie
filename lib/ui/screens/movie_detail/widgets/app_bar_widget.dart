@@ -49,7 +49,7 @@ class AppBarWidget extends PreferredSize {
                     ],
                     options: CarouselOptions(
                       enlargeCenterPage: true,
-                      // aspectRatio: 1.4,
+                      aspectRatio: 1.4,
                       autoPlay: false,
                     ),
                     carouselController: _controller,

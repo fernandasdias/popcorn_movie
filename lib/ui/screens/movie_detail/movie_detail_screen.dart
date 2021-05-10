@@ -35,8 +35,12 @@ class _MovieDetailProviderState extends State<MovieDetailProvider> {
               context: context,
             );
           } else
-            return Center(
-              child: CircularProgressIndicator(),
+            return Scaffold(
+              body: Container(
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ),
             );
         });
   }

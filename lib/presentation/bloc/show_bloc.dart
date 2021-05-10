@@ -1,8 +1,7 @@
 import 'dart:async';
 
-import 'package:PopcornMovie/data/models/show.dart';
 import 'package:PopcornMovie/data/models/show_detail.dart';
-import 'package:PopcornMovie/domain/entities/show.dart';
+
 import 'package:PopcornMovie/domain/entities/showList.dart';
 import 'package:PopcornMovie/domain/usecases/show_usecase.dart';
 import 'package:bloc/bloc.dart';
@@ -43,7 +42,7 @@ class ShowBloc extends Bloc<ShowEvent, ShowState> {
   }
 
   Stream<ShowState> mapSearchShowEvent(SearchShowEvent event) async* {
-    ShowList show = await ShowUseCase.searchShow(event.search);
-    yield IndexLoadedState(show);
+    // ShowList show = await ShowUseCase.searchShow(event.search);
+    // yield IndexLoadedState(show);
   }
 }

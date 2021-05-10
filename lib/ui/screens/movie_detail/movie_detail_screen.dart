@@ -3,12 +3,14 @@ import 'dart:math';
 import 'package:PopcornMovie/data/models/show_detail.dart';
 import 'package:PopcornMovie/domain/entities/show.dart';
 import 'package:PopcornMovie/presentation/show_detail_presenter.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:html/parser.dart';
 
 import 'package:PopcornMovie/data/models/show.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'widgets/app_bar_detail.dart';
 import 'widgets/star_display.dart';
@@ -157,152 +159,184 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
         ),
         body: SingleChildScrollView(
           child: Container(
+              // color: Colors.amber,
+              padding: EdgeInsets.only(bottom: 20),
               child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                // color: Colors.blue,
-                // alignment: Alignment.topRight,
-                padding: EdgeInsets.only(left: 150),
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        widget.show.name!,
-                        style: TextStyle(
-                            fontSize: 28, fontWeight: FontWeight.bold),
-                        softWrap: true,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    // color: Colors.blue,
+                    // alignment: Alignment.topRight,
+                    padding: EdgeInsets.only(left: 150),
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.show.name!,
+                            style: TextStyle(
+                                fontSize: 28, fontWeight: FontWeight.bold),
+                            softWrap: true,
+                          ),
+                          SizedBox(
+                            height: 12,
+                          ),
+                          Row(
+                            children: [...genres()!],
+                          )
+                        ],
                       ),
-                      SizedBox(
-                        height: 12,
-                      ),
-                      Row(
-                        children: [...genres()!],
-                      )
-                    ],
+                    ),
                   ),
-                ),
-              ),
-              SizedBox(
-                height: 60,
-              ),
-              Container(
-                // color: Colors.amber,
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  SizedBox(
+                    height: 60,
+                  ),
+                  Container(
+                    // color: Colors.amber,
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
                       children: [
-                        Column(
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('Year',
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold)),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Text(year),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Text('Duration',
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold)),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Row(
+                            Column(
                               children: [
-                                Icon(Icons.access_time),
-                                Text('${widget.show.runtime!} min')
-                              ],
-                            )
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Text('Rating',
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold)),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.star,
-                                  color: Colors.red,
+                                Text('Year',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold)),
+                                SizedBox(
+                                  height: 8,
                                 ),
-                                Text(
-                                    '${(widget.show.average['rating'] == null) ? 0 : widget.show.average['rating']!}/10')
+                                Text(year),
                               ],
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 40,
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          children: [
-                            Text('Network',
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold)),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Text(widget.show.network['name']),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Text('Schedule',
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold)),
-                            SizedBox(
-                              height: 8,
                             ),
                             Column(
-                              children: [...days()!],
+                              children: [
+                                Text('Duration',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold)),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Row(
+                                  children: [
+                                    Icon(Icons.access_time),
+                                    Text('${widget.show.runtime!} min')
+                                  ],
+                                )
+                              ],
                             ),
-                            SizedBox(
-                              width: 8,
+                            Column(
+                              children: [
+                                Text('Rating',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold)),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.star,
+                                      color: Colors.red,
+                                    ),
+                                    Text(
+                                        '${(widget.show.average['rating'] == null) ? 0 : widget.show.average['rating']!}/10')
+                                  ],
+                                )
+                              ],
                             ),
-                            Container(
-                              child: Text(widget.show.schedule['time']!),
-                              color: Colors.black12,
-                            )
                           ],
                         ),
-                        Column(
+                        SizedBox(
+                          height: 40,
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('Status',
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold)),
-                            SizedBox(
-                              height: 8,
+                            Column(
+                              children: [
+                                Text('Network',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold)),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text(widget.show.network['name']),
+                              ],
                             ),
-                            Text('${widget.show.status!}')
+                            Column(
+                              children: [
+                                Text('Schedule',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold)),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Column(
+                                  children: [...days()!],
+                                ),
+                                SizedBox(
+                                  width: 8,
+                                ),
+                                Container(
+                                  child: Text(
+                                    widget.show.schedule['time']!,
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  color: Colors.black12,
+                                )
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Text('Status',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold)),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text('${widget.show.status!}')
+                              ],
+                            ),
                           ],
                         ),
-                      ],
-                    ),
-                    Text('Sumary',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold)),
-                    Text(_parseHtmlString(widget.show.summary),
-                        textAlign: TextAlign.justify,
-                        style: TextStyle(fontSize: 16)),
-                    /*Column(
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text('Sumary',
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold)),
+                        SizedBox(
+                          height: 8,
+                        ),
+                        Text(_parseHtmlString(widget.show.summary),
+                            textAlign: TextAlign.justify,
+                            style: TextStyle(fontSize: 16)),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text('Official Site',
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold)),
+                        SizedBox(
+                          height: 8,
+                        ),
+                        InkWell(
+                          child: Text(widget.show.officialSite!),
+                          onTap: () =>
+                              launch('${widget.show.officialSite!}.html'),
+                        )
+                        /*Column(
                       children: [
                         Text('Cast',
                             style: TextStyle(
@@ -312,11 +346,11 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                         )
                       ],
                     )*/
-                  ],
-                ),
-              ),
-            ],
-          )),
+                      ],
+                    ),
+                  ),
+                ],
+              )),
         ));
   }
 }

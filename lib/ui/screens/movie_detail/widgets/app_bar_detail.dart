@@ -59,7 +59,7 @@ class AppBarDetail extends PreferredSize {
                         ),
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ));

@@ -99,7 +99,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       ),
                     );
                   } else {
-                    return Container();
+                    return Container(child: Text('Stil under development'));
                   }
                 }),
           ],

@@ -43,8 +43,12 @@ class _MovieDetailProviderState extends State<MovieDetailProvider> {
               context: context,
             );
           } else
-            return Center(
-              child: CircularProgressIndicator(),
+            return Scaffold(
+              body: Container(
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ),
             );
         });
   }
@@ -68,11 +72,8 @@ class MovieDetailScreen extends StatefulWidget {
 }
 
 class _MovieDetailScreenState extends State<MovieDetailScreen> {
-  // var detailPresenter = Provider.of<ShowDetailPresenter>(context);
-
   @override
   Widget build(BuildContext context) {
-    // print('Size: ${MediaQuery.of(context).size.height}');
     String _parseHtmlString(String htmlString) {
       final document = parse(htmlString);
       final String parsedString =

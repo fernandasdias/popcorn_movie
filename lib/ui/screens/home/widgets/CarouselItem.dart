@@ -38,7 +38,11 @@ class CarouselItem extends StatelessWidget {
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(30),
-          child: Image.network(shows.imageOriginal),
+          child: Image.network(
+            shows.imageOriginal,
+            // width: 500,
+            fit: BoxFit.fitWidth,
+          ),
         ),
       ),
     );
